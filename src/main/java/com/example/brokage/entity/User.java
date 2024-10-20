@@ -1,31 +1,29 @@
 package com.example.brokage.entity;
 
-import com.example.brokage.data.enums.Role;
-import com.example.brokage.data.enums.Status;
-import com.example.brokage.data.enums.TransactionType;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
 @ToString
 @Builder
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(name = "username")
-    private String username;
+    @Column(name = "email", unique = true)
+    private String email;
 
     @Column(name = "first_name")
     private String firstName;
@@ -47,4 +45,22 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<UserRole> userRoles = new LinkedHashSet<>();
+
+    public void addRole(UserRole role) {
+        if (userRoles == null) userRoles = new LinkedHashSet<>();
+        role.setUser(this);
+        this.userRoles.add(role);
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return userRoles.stream()
+                .map(userRole -> new SimpleGrantedAuthority(userRole.getRole().getRole()))
+                .collect(Collectors.toSet());
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
 }

@@ -2,10 +2,7 @@ package com.example.brokage.entity;
 
 import com.example.brokage.data.enums.Role;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.UUID;
 
@@ -14,6 +11,8 @@ import java.util.UUID;
 @ToString
 @Builder
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "USER_ROLE")
 public class UserRole {
     @Id
