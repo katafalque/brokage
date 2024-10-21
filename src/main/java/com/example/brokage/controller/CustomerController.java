@@ -70,4 +70,15 @@ public class CustomerController {
         );
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
+
+    @PostMapping("/order/delete")
+    @PreAuthorize("hasAuthority('CUSTOMER')")
+    public ResponseEntity<Object> deleteOrder(@RequestParam String orderId) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        orderService.deleteOrder(
+                userDetails.getUsername(),
+                orderId
+        );
+        return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
 }

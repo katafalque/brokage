@@ -7,6 +7,9 @@ import com.example.brokage.entity.Asset;
 import com.example.brokage.entity.Order;
 import com.example.brokage.entity.User;
 import com.example.brokage.exception.InsufficientBalanceException;
+import com.example.brokage.exception.OrderNotFoundException;
+import com.example.brokage.exception.WrongOrderStatusException;
+import com.example.brokage.repository.OrderRepository;
 import com.example.brokage.repository.UserRepository;
 import com.example.brokage.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +22,12 @@ import java.util.Set;
 public class OrderServiceImpl implements OrderService {
     private static final String TRY = "TRY";
     private final UserRepository userRepository;
+    private final OrderRepository orderRepository;
 
     @Autowired
-    public OrderServiceImpl(UserRepository userRepository) {
+    public OrderServiceImpl(UserRepository userRepository, OrderRepository orderRepository) {
         this.userRepository = userRepository;
+        this.orderRepository = orderRepository;
     }
 
     @Override
@@ -38,6 +43,17 @@ public class OrderServiceImpl implements OrderService {
         } else {
             handleCreateSellOrder(user, createOrderRequest);
         }
+    }
+
+    @Override
+    public void deleteOrder(String email, String orderId) {
+        Order order = this.orderRepository.findByUserEmailAndOrderId(email, orderId)
+                .orElseThrow(OrderNotFoundException::new);
+
+        if (order.getStatus() == Status.PENDING)
+            orderRepository.delete(order);
+        else
+            throw new WrongOrderStatusException();
     }
 
     private void handleCreateBuyOrder(User user, CreateOrderRequest createOrderRequest) {
