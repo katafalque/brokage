@@ -1,5 +1,7 @@
 package com.example.brokage.handler;
 
+import com.example.brokage.exception.AssetNotFoundException;
+import com.example.brokage.exception.InsufficientBalanceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
@@ -17,5 +19,15 @@ public class GlobalExceptionHelper {
     @ExceptionHandler({UsernameNotFoundException.class})
     public ResponseEntity<Object> handleUsernameNotFoundException(UsernameNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
+    }
+
+    @ExceptionHandler({AssetNotFoundException.class})
+    public ResponseEntity<Object> handleAssetNotFoundException(AssetNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
+    @ExceptionHandler({InsufficientBalanceException.class})
+    public ResponseEntity<Object> handleInsufficientBalanceException(InsufficientBalanceException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 }

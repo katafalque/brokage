@@ -57,6 +57,12 @@ public class User implements UserDetails {
         this.orders.add(order);
     }
 
+    public void addAsset(Asset asset) {
+        if (assets == null) assets = new LinkedHashSet<>();
+        asset.setUser(this);
+        this.assets.add(asset);
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return userRoles.stream()

@@ -9,6 +9,8 @@ import java.util.UUID;
 @Setter
 @ToString
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "ASSET")
 public class Asset {

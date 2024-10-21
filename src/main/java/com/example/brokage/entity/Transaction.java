@@ -3,10 +3,7 @@ package com.example.brokage.entity;
 import com.example.brokage.data.enums.Status;
 import com.example.brokage.data.enums.TransactionType;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.UUID;
 
@@ -14,6 +11,8 @@ import java.util.UUID;
 @Setter
 @ToString
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "TRANSACTION")
 public class Transaction {

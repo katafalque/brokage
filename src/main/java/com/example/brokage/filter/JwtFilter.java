@@ -20,9 +20,16 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 @Component
 public class JwtFilter extends OncePerRequestFilter {
+    private static final List<String> EXCLUDE_URL = Arrays.asList(
+            "/api/auth/signup",
+            "/api/auth/login",
+            "/h2-console"
+    );
 
     private final HandlerExceptionResolver handlerExceptionResolver;
     private final JwtTokenProvider jwtTokenProvider;
@@ -71,6 +78,12 @@ public class JwtFilter extends OncePerRequestFilter {
         } catch (Exception e){
             handlerExceptionResolver.resolveException(request, response, null, e);
         }
+    }
+
+    @Override
+    protected boolean shouldNotFilter(@NonNull HttpServletRequest request) throws ServletException {
+        return EXCLUDE_URL.stream()
+                .anyMatch(exclude -> exclude.equalsIgnoreCase(request.getServletPath()));
     }
 
     private String getTokenFromRequest(HttpServletRequest request){
