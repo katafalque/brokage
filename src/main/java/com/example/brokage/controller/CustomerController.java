@@ -26,13 +26,6 @@ public class CustomerController {
         this.assetService = assetService;
     }
 
-    @PostMapping("/order/create")
-    @PreAuthorize("hasAuthority('CUSTOMER')")
-    public ResponseEntity<String> signup(@RequestBody CreateOrderRequest createOrderRequest) {
-        orderService.createOrder(createOrderRequest);
-        return new ResponseEntity<>("OK", HttpStatus.OK);
-    }
-
     @PostMapping("/asset/deposit")
     @PreAuthorize("hasAuthority('CUSTOMER')")
     public ResponseEntity<String> deposit(@RequestBody CustomerDepositAssetRequest customerDepositAssetRequest) {
@@ -65,5 +58,16 @@ public class CustomerController {
                 userDetails.getUsername()
         );
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PostMapping("/order/create")
+    @PreAuthorize("hasAuthority('CUSTOMER')")
+    public ResponseEntity<Object> createOrder(@RequestBody CreateOrderRequest createOrderRequest) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        orderService.createOrder(
+                userDetails.getUsername(),
+                createOrderRequest
+        );
+        return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 }
