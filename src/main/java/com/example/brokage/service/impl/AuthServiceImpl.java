@@ -1,5 +1,6 @@
 package com.example.brokage.service.impl;
 
+import com.example.brokage.component.JwtTokenProvider;
 import com.example.brokage.data.enums.Role;
 import com.example.brokage.data.request.LoginRequest;
 import com.example.brokage.data.request.SignupRequest;
@@ -7,25 +8,30 @@ import com.example.brokage.entity.User;
 import com.example.brokage.entity.UserRole;
 import com.example.brokage.repository.UserRepository;
 import com.example.brokage.service.AuthService;
-import com.example.brokage.service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 public class AuthServiceImpl implements AuthService {
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
-    private final JwtService jwtService;
+    private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AuthServiceImpl(AuthenticationManager authenticationManager, UserRepository userRepository, JwtService jwtService, PasswordEncoder passwordEncoder) {
+    public AuthServiceImpl(AuthenticationManager authenticationManager,
+                           UserRepository userRepository,
+                           JwtTokenProvider jwtTokenProvider,
+                           PasswordEncoder passwordEncoder) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
-        this.jwtService = jwtService;
+        this.jwtTokenProvider = jwtTokenProvider;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -41,7 +47,7 @@ public class AuthServiceImpl implements AuthService {
         var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid Credentials."));
 
-        return jwtService.generateToken(user);
+        return jwtTokenProvider.generateToken(user.getEmail());
     }
 
     @Override

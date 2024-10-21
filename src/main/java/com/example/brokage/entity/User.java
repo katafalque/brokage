@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 
 @Getter
 @Setter
-@ToString
 @Builder
 @Entity
 @AllArgsConstructor
@@ -52,15 +51,31 @@ public class User implements UserDetails {
         this.userRoles.add(role);
     }
 
+    public void addOrder(Order order) {
+        if (orders == null) orders = new LinkedHashSet<>();
+        order.setUser(this);
+        this.orders.add(order);
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return userRoles.stream()
-                .map(userRole -> new SimpleGrantedAuthority(userRole.getRole().getRole()))
+                .map(userRole -> new SimpleGrantedAuthority(userRole.getRole().getRole().toUpperCase(Locale.ENGLISH)))
                 .collect(Collectors.toSet());
     }
 
     @Override
     public String getUsername() {
         return email;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
     }
 }

@@ -1,11 +1,9 @@
 package com.example.brokage.controller;
 
+import com.example.brokage.component.JwtTokenProvider;
 import com.example.brokage.data.request.LoginRequest;
 import com.example.brokage.data.request.SignupRequest;
-import com.example.brokage.entity.User;
 import com.example.brokage.service.AuthService;
-import com.example.brokage.service.JwtService;
-import com.example.brokage.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +19,7 @@ public class AuthController {
     private final AuthService authService;
 
     @Autowired
-    public AuthController(AuthService authService, JwtService jwtService) {
+    public AuthController(AuthService authService) {
         this.authService = authService;
     }
 

@@ -14,6 +14,8 @@ import java.util.UUID;
 @ToString
 @Builder
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "orders")
 public class Order {
     @Id
@@ -32,6 +34,9 @@ public class Order {
 
     @Column(name = "price")
     private long price;
+
+    @Column(name = "size")
+    private int size;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
