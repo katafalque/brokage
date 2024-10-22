@@ -1,21 +1,30 @@
 package com.example.brokage.service.impl;
 
+import com.example.brokage.data.dto.OrderDto;
 import com.example.brokage.data.enums.Side;
 import com.example.brokage.data.enums.Status;
 import com.example.brokage.data.request.CreateOrderRequest;
+import com.example.brokage.data.request.ListOrdersRequest;
+import com.example.brokage.data.response.ListOrdersResponse;
+import com.example.brokage.data.specification.OrderSpesification;
 import com.example.brokage.entity.Asset;
 import com.example.brokage.entity.Order;
 import com.example.brokage.entity.User;
 import com.example.brokage.exception.InsufficientBalanceException;
 import com.example.brokage.exception.OrderNotFoundException;
 import com.example.brokage.exception.WrongOrderStatusException;
+import com.example.brokage.mapper.ListOrdersResponseMapper;
 import com.example.brokage.repository.OrderRepository;
 import com.example.brokage.repository.UserRepository;
 import com.example.brokage.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Set;
 
 @Service
@@ -23,11 +32,13 @@ public class OrderServiceImpl implements OrderService {
     private static final String TRY = "TRY";
     private final UserRepository userRepository;
     private final OrderRepository orderRepository;
+    private final ListOrdersResponseMapper listOrdersResponseMapper;
 
     @Autowired
-    public OrderServiceImpl(UserRepository userRepository, OrderRepository orderRepository) {
+    public OrderServiceImpl(UserRepository userRepository, OrderRepository orderRepository, ListOrdersResponseMapper listOrdersResponseMapper) {
         this.userRepository = userRepository;
         this.orderRepository = orderRepository;
+        this.listOrdersResponseMapper = listOrdersResponseMapper;
     }
 
     @Override
@@ -54,6 +65,22 @@ public class OrderServiceImpl implements OrderService {
             orderRepository.delete(order);
         else
             throw new WrongOrderStatusException();
+    }
+
+    @Override
+    public ListOrdersResponse<OrderDto> getByFilter(String email, ListOrdersRequest request) {
+        User user = this.userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found."));
+
+        Specification<Order> spec =
+                OrderSpesification.filterBy(user.getId().toString(), request.getStartDate(), request.getEndDate());
+
+        Page<Order> result = this.orderRepository.findAll(
+                spec,
+                PageRequest.of(request.getPage(), request.getPageSize())
+        );
+
+        return this.listOrdersResponseMapper.toListOrdersResponse(result);
     }
 
     private void handleCreateBuyOrder(User user, CreateOrderRequest createOrderRequest) {

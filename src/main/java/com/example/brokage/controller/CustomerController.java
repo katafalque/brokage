@@ -3,6 +3,7 @@ package com.example.brokage.controller;
 import com.example.brokage.data.request.CreateOrderRequest;
 import com.example.brokage.data.request.CustomerDepositAssetRequest;
 import com.example.brokage.data.request.CustomerWithdrawAssetRequest;
+import com.example.brokage.data.request.ListOrdersRequest;
 import com.example.brokage.data.response.CustomerListAssetsResponse;
 import com.example.brokage.service.AssetService;
 import com.example.brokage.service.OrderService;
@@ -80,5 +81,16 @@ public class CustomerController {
                 orderId
         );
         return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
+
+    @PostMapping("/order/list")
+    @PreAuthorize("hasAuthority('CUSTOMER')")
+    public ResponseEntity<Object> listOrders(@RequestBody ListOrdersRequest listOrdersRequest) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        var resp = orderService.getByFilter(
+                userDetails.getUsername(),
+                listOrdersRequest
+        );
+        return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 }
