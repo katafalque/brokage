@@ -19,6 +19,13 @@
 * admin endpoints differ from customer endpoints by giving the user email as query param. this is already on postman collection
 * in order list endpoints there is a pagination apart from date filter. page = 0 gets the first page while pageSize declares element count in one page.
 
+
+# DB ACCESS
+* in memory db can be accessed through link http://localhost:8080/h2-console/
+* jdbc url: jdbc:h2:mem:testdb
+* username: sa
+* password: password
+
 # What is missing
 * Request body validations
 * some unit cases on basic service classes (auth service)
