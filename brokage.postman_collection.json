@@ -1,0 +1,482 @@
+{
+	"info": {
+		"_postman_id": "2b3a7f98-333b-4ff7-b5f0-225befb6f531",
+		"name": "brokage",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15963022"
+	},
+	"item": [
+		{
+			"name": "sign up",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"sample@example.com\",\r\n    \"password\": \"SamplePassword123.\",\r\n    \"fist_name\": \"john\",\r\n    \"last_name\": \"doe\",\r\n    \"role\": \"customer\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"sample@example.com\",\r\n    \"password\": \"SamplePassword123.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "customer create order",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbHBlcmVuQGFscGVyZW4uY29tIiwiaWF0IjoxNzI5NTQ1OTg5LCJleHAiOjE3Mjk1NDk1ODl9.tZU31JCvONsWUpkoSQ-UX_cl6mhxI6tFBcMpTXiuwhWQmebthmSCUaVdVVe4IWktNlDxTf8IJSVbYsYdiGIRMQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"asset\": \"USD\",\r\n    \"side\": \"BUY\",\r\n    \"size\": 10,\r\n    \"price\": 20\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/customer/order/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customer",
+						"order",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin create order",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbHBlcmVuQGFscGVyZW4uY29tIiwiaWF0IjoxNzI5NTQ1OTg5LCJleHAiOjE3Mjk1NDk1ODl9.tZU31JCvONsWUpkoSQ-UX_cl6mhxI6tFBcMpTXiuwhWQmebthmSCUaVdVVe4IWktNlDxTf8IJSVbYsYdiGIRMQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"asset\": \"USD\",\r\n    \"side\": \"BUY\",\r\n    \"size\": 10,\r\n    \"price\": 20\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/admin/order/create?customerEmail=sample@example.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"order",
+						"create"
+					],
+					"query": [
+						{
+							"key": "customerEmail",
+							"value": "sample@example.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "customer asset deposit",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbHBlcmVuQGFscGVyZW4uY29tIiwiaWF0IjoxNzI5NTQ1ODA5LCJleHAiOjE3Mjk1NDk0MDl9.dPTRntTTfHjkL660TOaiPd1WzMjZ3FqubIEZ5mvnNHVU1-VR0OKXDOGFCNdsro2EY77GBzbNHlAvMgG-Sr1CyQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"amount\": 1000000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/customer/asset/deposit",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customer",
+						"asset",
+						"deposit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin asset deposit",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbHBlcmVuQGFscGVyZW4uY29tIiwiaWF0IjoxNzI5NTQ1ODA5LCJleHAiOjE3Mjk1NDk0MDl9.dPTRntTTfHjkL660TOaiPd1WzMjZ3FqubIEZ5mvnNHVU1-VR0OKXDOGFCNdsro2EY77GBzbNHlAvMgG-Sr1CyQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"amount\": 1000000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/admin/asset/deposit?customerEmail=sample@example.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"asset",
+						"deposit"
+					],
+					"query": [
+						{
+							"key": "customerEmail",
+							"value": "sample@example.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "customer asset withdraw",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbHBlcmVuQGFscGVyZW4uY29tIiwiaWF0IjoxNzI5NTMzOTY5LCJleHAiOjE3Mjk1Mzc1Njl9.fKdeNHSHbTtUgsN0IDcKv6UJs5UWTWmOe5iMLogZvsfEkBKzxteTc2JofZ9qr7bMMNsot5v4nj2thNzzM7L4IQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"amount\": 25\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/customer/asset/withdraw",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customer",
+						"asset",
+						"withdraw"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin asset withdraw",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbHBlcmVuQGFscGVyZW4uY29tIiwiaWF0IjoxNzI5NTMzOTY5LCJleHAiOjE3Mjk1Mzc1Njl9.fKdeNHSHbTtUgsN0IDcKv6UJs5UWTWmOe5iMLogZvsfEkBKzxteTc2JofZ9qr7bMMNsot5v4nj2thNzzM7L4IQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"amount\": 25\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/admin/asset/withdraw?customerEmail=sample@example.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"asset",
+						"withdraw"
+					],
+					"query": [
+						{
+							"key": "customerEmail",
+							"value": "sample@example.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "customer order list",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbHBlcmVuQGFscGVyZW4uY29tIiwiaWF0IjoxNzI5NTMzOTY5LCJleHAiOjE3Mjk1Mzc1Njl9.fKdeNHSHbTtUgsN0IDcKv6UJs5UWTWmOe5iMLogZvsfEkBKzxteTc2JofZ9qr7bMMNsot5v4nj2thNzzM7L4IQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"amount\": 25\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/customer/asset/withdraw",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customer",
+						"asset",
+						"withdraw"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin order list",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbHBlcmVuQGFscGVyZW4uY29tIiwiaWF0IjoxNzI5NTMzOTY5LCJleHAiOjE3Mjk1Mzc1Njl9.fKdeNHSHbTtUgsN0IDcKv6UJs5UWTWmOe5iMLogZvsfEkBKzxteTc2JofZ9qr7bMMNsot5v4nj2thNzzM7L4IQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"amount\": 25\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/admin/asset/withdraw?customerEmail=sample@example.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"asset",
+						"withdraw"
+					],
+					"query": [
+						{
+							"key": "customerEmail",
+							"value": "sample@example.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "customer asset list",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbHBlcmVuQGFscGVyZW4uY29tIiwiaWF0IjoxNzI5NTMzOTY5LCJleHAiOjE3Mjk1Mzc1Njl9.fKdeNHSHbTtUgsN0IDcKv6UJs5UWTWmOe5iMLogZvsfEkBKzxteTc2JofZ9qr7bMMNsot5v4nj2thNzzM7L4IQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/customer/asset/list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customer",
+						"asset",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin asset list",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbHBlcmVuQGFscGVyZW4uY29tIiwiaWF0IjoxNzI5NTMzOTY5LCJleHAiOjE3Mjk1Mzc1Njl9.fKdeNHSHbTtUgsN0IDcKv6UJs5UWTWmOe5iMLogZvsfEkBKzxteTc2JofZ9qr7bMMNsot5v4nj2thNzzM7L4IQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/admin/asset/list?customerEmail=sample@example.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"asset",
+						"list"
+					],
+					"query": [
+						{
+							"key": "customerEmail",
+							"value": "sample@example.com"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
