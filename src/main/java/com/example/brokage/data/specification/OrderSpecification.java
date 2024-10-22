@@ -1,6 +1,5 @@
 package com.example.brokage.data.specification;
 
-import com.example.brokage.data.request.ListOrdersRequest;
 import com.example.brokage.entity.Order;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -11,11 +10,11 @@ import org.springframework.data.jpa.domain.Specification;
 import java.util.Date;
 import java.util.UUID;
 
-public class OrderSpesification {
+public class OrderSpecification {
     public static final String ID = "id";
     public static final String DATE = "date";
 
-    private OrderSpesification() {
+    private OrderSpecification() {
 
     }
 

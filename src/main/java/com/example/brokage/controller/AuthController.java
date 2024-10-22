@@ -1,6 +1,5 @@
 package com.example.brokage.controller;
 
-import com.example.brokage.component.JwtTokenProvider;
 import com.example.brokage.data.request.LoginRequest;
 import com.example.brokage.data.request.SignupRequest;
 import com.example.brokage.service.AuthService;
